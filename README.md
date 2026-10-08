@@ -22,14 +22,16 @@ rbnz-fec export --media-corpus media_turns.csv  # -> data/corpus.csv + .txt per 
 
 | Period | Host | Notes |
 |---|---|---|
-| 2021 – mid-2022 | FEC Facebook page | `yt-dlp` needs a logged-in `--cookies` file |
-| late 2022 – 2023 | Vimeo (embedded on RBNZ event pages) | |
-| 2024 – present | Parliament website livestream archive / Parliament YouTube | |
-| pre-2021 | Parliament "In the House" / Parliament YouTube / Vimeo | found by the `discover` YouTube search; check each one |
+| May 2018 – Aug 2023 | [Parliament On Demand](https://ondemand.parliament.nz/select-committees) (52nd–53rd Parliaments) | Direct MP4s, matched to MPS dates in `config/mps_dates.csv` |
+| late 2023 – present | Parliament's [FEC Vimeo showcase](https://vimeo.com/showcase/10758103) | |
+| before May 2018 | Parliament "In the House" YouTube | YouTube blocks cloud IPs; run locally |
 
 `config/seed_events.csv` lists the hand-curated hearings. It always wins over
 auto-discovered rows. Paste a confirmed `media_url` there to mark a hearing verified.
 Committee videos often include unrelated business, so trim or check start times.
+
+Hosts the pipeline needs: `ondemand.parliament.nz`, `sit-sc-archive-daasadfxamcfb4du.a02.azurefd.net`,
+`vimeo.com`/`*.vimeocdn.com`/`*.akamaized.net`, `huggingface.co`/`*.huggingface.co`/`*.hf.co`.
 
 ## Accuracy notes
 

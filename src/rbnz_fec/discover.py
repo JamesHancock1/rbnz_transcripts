@@ -154,7 +154,19 @@ def save_catalogue(events: dict[str, Event]) -> None:
 
 
 def run(crawl_years: range | None = None, search: bool = True) -> None:
+    from . import sources
+
     events = load_catalogue()
+    for fetch in (sources.ondemand_candidates, sources.vimeo_candidates):
+        try:
+            for c in fetch():
+                ev = events.get(c["event_id"]) or Event(event_id=c["event_id"])
+                for k, v in c.items():
+                    if not getattr(ev, k):
+                        setattr(ev, k, v)
+                events[ev.event_id] = ev
+        except Exception as e:  # one archive being unreachable shouldn't stop the rest
+            print(f"  ! {fetch.__name__}: {e}")
     with (CONFIG / "seed_events.csv").open() as f:
         for r in csv.DictReader(f):
             ev = events.get(r["event_id"]) or Event(event_id=r["event_id"])
